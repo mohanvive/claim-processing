@@ -1,1 +1,1 @@
-
+configurable string openAIKey = ?;
