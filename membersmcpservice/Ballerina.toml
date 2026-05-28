@@ -1,0 +1,9 @@
+[package]
+org = "mohan"
+name = "membersmcpservice"
+version = "0.1.0"
+distribution = "2201.13.4"
+title = "MembersMCPService"
+
+[build-options]
+sticky = true

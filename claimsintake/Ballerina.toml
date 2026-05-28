@@ -1,0 +1,10 @@
+[package]
+org = "mohan"
+name = "claimsintake"
+version = "0.1.0"
+distribution = "2201.13.4"
+title = "ClaimsIntake"
+
+[build-options]
+sticky = true
+observabilityIncluded = true

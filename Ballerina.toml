@@ -1,0 +1,3 @@
+[workspace]
+title = "Claim Processing"
+packages = ["claimsintake", "membersmcpservice", "claimsmcpservice", "feeschedulemcpserver", "adjudication"]
