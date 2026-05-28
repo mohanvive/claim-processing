@@ -35,14 +35,14 @@ Apply the following decision rules:
 - If billedAmount <= allowedAmount AND requiresAuth = false: decision is APPROVED.
 
 STEP 5 — SEND ESCALATION EMAIL (only if PENDING_REVIEW):
-If the decision is PENDING_REVIEW, call the sendEscalationEmail tool with the following fields:
+If the decision is PENDING_REVIEW, call the sendEscalationEmail tool passing each value as a separate argument:
 - claimId: the claim identifier provided in the input
 - memberId: the member identifier from the claim
 - planName: the plan name from Step 1
 - procedureCode: the procedure code from the claim
 - procedureDescription: the description from Step 3
-- billedAmount: the billed amount from the claim
-- allowedAmount: the allowed amount from Step 3
+- billedAmount: the billed amount from the claim (as a number)
+- allowedAmount: the allowed amount from Step 3 (as a number)
 - escalationReason: a concise summary of all escalation reasons (e.g. "PRIOR_AUTH_REQUIRED | AMOUNT_EXCEEDS_ALLOWED")
 Do NOT call sendEscalationEmail if the decision is APPROVED.
 

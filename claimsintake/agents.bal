@@ -17,6 +17,16 @@ If isDuplicate is true, reject the claim with reason DUPLICATE_CLAIM, citing the
 If isDuplicate is false, proceed to Step 3.
 
 STEP 3 — CONFIRM AND ACCEPT:
-Confirm the claim is accepted for processing. Summarise the member's name, plan, and the procedure being claimed.`
-    }, model = openaiModelProvider, tools = [membersMcpToolKit, claimsMcpToolKit]
+Confirm the claim passes intake validation. Note the member's name, plan, and the procedure being claimed.
+
+STEP 4 — FORWARD TO ADJUDICATION:
+Call the forwardToAdjudication tool with the following fields from the claim:
+- claimId: the claim identifier
+- memberId: the member identifier
+- procedureCode: the procedure code
+- billedAmount: the billed amount
+- serviceDate: the service date
+- sessionId: use the same sessionId from the current conversation
+Return the adjudication agent's response as the final outcome.`
+    }, model = openaiModelProvider, tools = [membersMcpToolKit, claimsMcpToolKit, forwardToAdjudication]
 );
