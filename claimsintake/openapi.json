@@ -1,0 +1,85 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Claims Intake Agent",
+    "description": "Validates healthcare claims — checks member eligibility, procedure code format, and duplicate detection before forwarding to the Adjudication Agent.",
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:9090",
+      "description": "Local development"
+    }
+  ],
+  "paths": {
+    "/claimsIntakeAgent/chat": {
+      "post": {
+        "summary": "Submit a message to the Claims Intake Agent",
+        "operationId": "claimsIntakeAgentChat",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatReqMessage"
+              },
+              "example": {
+                "message": "Process claim CLM-A001 for member M-1001, procedure 99213, billed $130, service date 2024-05-10",
+                "sessionId": "session-abc123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Agent response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatRespMessage"
+                },
+                "example": {
+                  "message": "Claim CLM-A001 has passed intake validation. Member M-1001 is active on Gold PPO. Procedure 99213 is valid. No duplicate found. Forwarding to adjudication."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request — malformed payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ChatReqMessage": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Natural language message to the agent describing the claim to process."
+          },
+          "sessionId": {
+            "type": "string",
+            "description": "Optional session identifier for multi-turn conversations."
+          }
+        }
+      },
+      "ChatRespMessage": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Agent's natural language response including validation outcome and decision rationale."
+          }
+        }
+      }
+    }
+  }
+}
