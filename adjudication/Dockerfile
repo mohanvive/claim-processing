@@ -2,7 +2,7 @@
 FROM ballerina/ballerina:2201.13.4 AS build
 
 WORKDIR /home/ballerina
-COPY --chown=10001:10001 . .
+COPY --chown=ballerina:troupe . .
 RUN bal build
 
 # Stage 2: Runtime
