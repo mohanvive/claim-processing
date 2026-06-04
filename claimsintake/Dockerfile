@@ -2,7 +2,7 @@
 FROM ballerina/ballerina:2201.13.4 AS build
 
 WORKDIR /home/ballerina
-COPY --chown=10001:10001 . .
+COPY --chown=ballerina:troupe . .
 RUN bal build
 
 # Stage 2: Runtime
@@ -15,8 +15,9 @@ RUN groupadd -r ballerina && useradd -r -g ballerina ballerina
 WORKDIR /home/ballerina
 
 COPY --from=build /home/ballerina/target/bin/claimsintake.jar .
+COPY --from=build /home/ballerina/config.toml .
 
-RUN chown ballerina:ballerina claimsintake.jar
+RUN chown ballerina:ballerina claimsintake.jar config.toml
 
 USER ballerina
 
@@ -37,4 +38,4 @@ EXPOSE 9090
 #   BAL_CONFIG_VAR_ballerinax_amp_componentUid=<component-uid>
 #   BAL_CONFIG_VAR_ballerinax_amp_environmentUid=<environment-uid>
 
-CMD ["java", "-jar", "claimsintake.jar"]
+CMD ["java", "-Dballerina.config=config.toml", "-jar", "claimsintake.jar"]

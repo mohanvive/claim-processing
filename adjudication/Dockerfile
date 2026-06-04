@@ -45,4 +45,4 @@ EXPOSE 9091
 #   BAL_CONFIG_VAR_ballerinax_amp_componentUid=<component-uid>
 #   BAL_CONFIG_VAR_ballerinax_amp_environmentUid=<environment-uid>
 
-CMD ["java", "-jar", "adjudication.jar"]
+CMD ["java", "-Dballerina.config=config.toml", "-jar", "adjudication.jar"]
