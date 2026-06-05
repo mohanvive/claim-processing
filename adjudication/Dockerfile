@@ -15,8 +15,8 @@ RUN groupadd -r ballerina && useradd -r -g ballerina ballerina
 WORKDIR /home/ballerina
 
 COPY --from=build /home/ballerina/target/bin/adjudication.jar .
-COPY --from=build /home/ballerina/Config.toml .
-COPY --from=build /home/ballerina/entrypoint.sh .
+COPY Config.toml .
+COPY entrypoint.sh .
 
 RUN chown ballerina:ballerina adjudication.jar Config.toml entrypoint.sh \
     && chmod +x entrypoint.sh
