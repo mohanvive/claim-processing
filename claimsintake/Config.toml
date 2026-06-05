@@ -1,0 +1,6 @@
+[ballerina.log]
+level = "DEBUG"
+
+[ballerina.observe]
+tracingEnabled = true
+tracingProvider = "amp"
