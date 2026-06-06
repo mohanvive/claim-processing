@@ -24,15 +24,15 @@
                 "$ref": "#/components/schemas/ChatReqMessage"
               },
               "example": {
-                "message": "Adjudicate claim CLM-A001 for member M-1001 on plan PLAN-GOLD, procedure 99213, billed $130",
-                "sessionId": "session-abc123"
+                "sessionId": "session-abc123",
+                "message": "Adjudicate claim CLM-A001 for member M-1001 on plan PLAN-GOLD, procedure 99213, billed $130"
               }
             }
           }
         },
         "responses": {
-          "200": {
-            "description": "Agent response",
+          "201": {
+            "description": "Created — agent response",
             "content": {
               "application/json": {
                 "schema": {
@@ -45,10 +45,24 @@
             }
           },
           "400": {
-            "description": "Bad request — malformed payload"
+            "description": "Bad request — malformed payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorPayload"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorPayload"
+                }
+              }
+            }
           }
         }
       }
@@ -58,17 +72,18 @@
     "schemas": {
       "ChatReqMessage": {
         "type": "object",
-        "required": ["message"],
+        "required": ["sessionId", "message"],
         "properties": {
+          "sessionId": {
+            "type": "string",
+            "description": "Session identifier for multi-turn conversations."
+          },
           "message": {
             "type": "string",
             "description": "Natural language message to the agent describing the claim to adjudicate."
-          },
-          "sessionId": {
-            "type": "string",
-            "description": "Optional session identifier for multi-turn conversations."
           }
-        }
+        },
+        "additionalProperties": false
       },
       "ChatRespMessage": {
         "type": "object",
@@ -78,7 +93,40 @@
             "type": "string",
             "description": "Agent's natural language response including adjudication decision (APPROVED / REJECTED / PENDING_REVIEW) and rationale."
           }
-        }
+        },
+        "additionalProperties": false
+      },
+      "ErrorPayload": {
+        "type": "object",
+        "required": ["timestamp", "status", "reason", "message", "path", "method"],
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "Time when the error occurred."
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "description": "HTTP status code associated with the error."
+          },
+          "reason": {
+            "type": "string",
+            "description": "Short reason for the error."
+          },
+          "message": {
+            "type": "string",
+            "description": "Detailed message describing the error."
+          },
+          "path": {
+            "type": "string",
+            "description": "Request path where the error occurred."
+          },
+          "method": {
+            "type": "string",
+            "description": "HTTP method used for the request."
+          }
+        },
+        "additionalProperties": false
       }
     }
   }
