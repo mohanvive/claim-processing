@@ -28,9 +28,9 @@ endpoints:
     service:
       # +optional Base path of the API that gets exposed via the endpoint.
       # This is mandatory if the endpoint type is set to REST or GraphQL.
-      # The Ballerina service is mounted at `/adjudicationAgent` (see main.bal),
-      # so the gateway must forward to that prefix on the backend.
-      basePath: /adjudicationAgent
+      # Using the default root context; the full path (`/adjudicationAgent/chat`)
+      # is carried in the OpenAPI contract instead.
+      basePath: /
       # +required Numeric port value that gets exposed via the endpoint.
       # Matches the http:Listener port in main.bal.
       port: 9091
@@ -40,7 +40,7 @@ endpoints:
     # +optional The path to the OpenAPI/schema definition file, relative to
     # this component's root. Used to generate the managed API for REST
     # endpoints instead of a wildcard route.
-    schemaFilePath: openapi.yaml
+    schemaFilePath: openapi.json
     # +optional Network level visibilities of the endpoint.
     # Accepted values: Project|Organization|Public(Default).
     networkVisibilities:
