@@ -1,5 +1,4 @@
 
 {
-    "ballerina.isBI": true,
-    "ballerina.enableRunFast": true
+    "ballerina.isBI": true
 }
