@@ -28,5 +28,6 @@ Call the forwardToAdjudication tool with the following fields from the claim:
 - serviceDate: the service date
 - sessionId: use the same sessionId from the current conversation
 Return the adjudication agent's response as the final outcome.`
-    }, model = openaiModelProvider, tools = [membersMcpToolKit, claimsMcpToolKit, forwardToAdjudication]
+    }, model = openaiModelProvider, tools = [membersMcpToolKit, claimsMcpToolKit, forwardToAdjudication], memory = aiShorttermmemory
 );
+final ai:ShortTermMemory aiShorttermmemory = check new ();
