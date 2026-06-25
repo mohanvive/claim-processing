@@ -43,7 +43,7 @@ Please log in to the claims management system to review and action this claim.
     gmail:MessageRequest emailMessage = {
         to: [reviewerEmail],
         'from: senderEmail,
-        subject: string `[PENDING REVIEW] Claim ${claimId} — ${escalationReason}`,
+        subject: string `[PENDING REVIEW] Claim ${claimId} - ${escalationReason}`,
         bodyInText: emailBody
     };
 
